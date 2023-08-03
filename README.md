@@ -9,7 +9,7 @@ A (fast) Khmer word segmentation toolkit.
 - Multiprocess support
 
 ```shell
-pip install -r requirements.txt
+pip install khmercut
 ```
 
 ### Python
@@ -26,7 +26,7 @@ tokenize("ឃាត់ខ្លួនជនសង្ស័យ០៤នាក់ 
 e.g.
 
 ```shell
-./khmercut.py large_km.txt --jobs 20 --normalize -d out/ -s "|"
+khmercut large_km.txt --jobs 20 --normalize -d out/ -s "|"
 ```
 
 Available options
