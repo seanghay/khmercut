@@ -2,7 +2,7 @@ import setuptools
 
 with open("README.md", "r") as f:
     long_description = f.read()
-    
+
 extras_requirements = {
     "test": [
         "pytest",
@@ -12,7 +12,7 @@ extras_requirements = {
 
 setuptools.setup(
     name="khmercut",
-    version="0.0.2",
+    version="0.1.0",
     description="A (fast) Khmer word segmentation toolkit.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -27,19 +27,14 @@ setuptools.setup(
         "Natural Language :: English",
     ],
     python_requires=">3.5",
-    packages=setuptools.find_packages(exclude=["data", "bin", "samples", "scripts"]),
+    packages=setuptools.find_packages(),
     package_dir={"khmercut": "khmercut"},
     package_data={
         "khmercut": [
-          "crf_ner_10000.crfsuite",
+            "crf_ner_10000.crfsuite",
         ]
     },
     include_package_data=True,
-    install_requires=[
-        "python-crfsuite==0.9.9",
-        "khmernormalizer==0.0.4",
-        "tqdm==4.65.0"
-    ],
+    install_requires=["python-crfsuite"],
     extras_require=extras_requirements,
-    scripts=['bin/khmercut'],
 )
