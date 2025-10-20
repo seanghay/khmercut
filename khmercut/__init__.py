@@ -1,5 +1,6 @@
 from pycrfsuite import Tagger
 import os
+import hashlib
 
 SEPARATOR = "\u200b"
 KHCONST = set("កខគឃងចឆជឈញដឋឌឍណតថទធនបផពភមយរលវឝឞសហឡអឣឤឥឦឧឨឩឪឫឬឭឮឯឰឱឲឳ")
@@ -11,7 +12,27 @@ KHNUMBER = set("០១២៣៤៥៦៧៨៩0123456789")
 KHLUNAR = set("᧠᧡᧢᧣᧤᧥᧦᧧᧨᧩᧪᧫᧬᧭᧮᧯᧰᧱᧲᧳᧴᧵᧶᧷᧸᧹᧺᧻᧼᧽᧾᧿")
 NS = "NS"
 
+# Expected SHA256 hash of the model file for integrity verification
+EXPECTED_MODEL_HASH = "0f93805e229770ede559cce0c280ec11b3758aa620606335aa0e146e42502c7e"
+
+def verify_model_integrity(model_file_path, expected_hash):
+    """Verify model file integrity using SHA256 hash."""
+    if not os.path.exists(model_file_path):
+        return False
+
+    try:
+        with open(model_file_path, 'rb') as f:
+            file_hash = hashlib.sha256(f.read()).hexdigest()
+        return file_hash == expected_hash
+    except (IOError, OSError):
+        return False
+
 model_path =  os.path.join(os.path.dirname(__file__), "crf_ner_10000.crfsuite")
+
+# Verify model integrity before loading
+if not verify_model_integrity(model_path, EXPECTED_MODEL_HASH):
+    raise RuntimeError(f"Model file integrity check failed. Expected hash: {EXPECTED_MODEL_HASH[:16]}...")
+
 tagger = Tagger()
 tagger.open(model_path)
 
