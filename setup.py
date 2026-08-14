@@ -8,11 +8,15 @@ extras_requirements = {
         "pytest",
         "coverage",
     ],
+    "nn": [
+        "numpy",
+        "onnxruntime",
+    ],
 }
 
 setuptools.setup(
     name="khmercut",
-    version="0.1.0",
+    version="0.2.0",
     description="A (fast) Khmer word segmentation toolkit.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -32,6 +36,7 @@ setuptools.setup(
     package_data={
         "khmercut": [
             "crf_ner_10000.crfsuite",
+            "nn_model/*",
         ]
     },
     include_package_data=True,

@@ -1,0 +1,21 @@
+{
+  "config": {
+    "vocab_size": 512,
+    "num_classes": 10,
+    "tok_dim": 96,
+    "cls_dim": 16,
+    "dim": 320,
+    "encoder": "conv",
+    "dropout": 0.1,
+    "num_tags": 5
+  },
+  "labels": [
+    "0",
+    "^",
+    "_",
+    "}{",
+    "~"
+  ],
+  "step": 4000,
+  "dev_f1": 0.9921168017439044
+}

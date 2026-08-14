@@ -1,4 +1,3 @@
-from pycrfsuite import Tagger
 import os
 
 SEPARATOR = "\u200b"
@@ -11,9 +10,18 @@ KHNUMBER = set("០១២៣៤៥៦៧៨៩0123456789")
 KHLUNAR = set("᧠᧡᧢᧣᧤᧥᧦᧧᧨᧩᧪᧫᧬᧭᧮᧯᧰᧱᧲᧳᧴᧵᧶᧷᧸᧹᧺᧻᧼᧽᧾᧿")
 NS = "NS"
 
-model_path =  os.path.join(os.path.dirname(__file__), "crf_ner_10000.crfsuite")
-tagger = Tagger()
-tagger.open(model_path)
+model_path = os.path.join(os.path.dirname(__file__), "crf_ner_10000.crfsuite")
+tagger = None
+
+
+def load():
+    global tagger
+    if tagger is None:
+        from pycrfsuite import Tagger
+
+        tagger = Tagger()
+        tagger.open(model_path)
+    return tagger
 
 def is_khmer_char(ch: str):
     if (ch >= "\u1780") and (ch <= "\u17ff"):
@@ -177,7 +185,7 @@ def tokenize(text):
     features = create_kcc_features(graphemes)
 
     tokens = []
-    for i, tag in enumerate(tagger.tag(features)):
+    for i, tag in enumerate(load().tag(features)):
         if tag == "1" or i == 0:
             tokens.append(graphemes[i])
         else:
